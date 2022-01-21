@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
@@ -33,7 +34,7 @@ public class CreditCardController {
 
 
     @GetMapping(value = "/creditcard", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CardResponse[] getCreditCard() {
+    public List<CardResponse> getCreditCard() {
         return this.cardService.getCreditCards();
     }
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class CreditCardService {
@@ -16,7 +17,7 @@ public class CreditCardService {
     }
 
 
-    public CardResponse[] getCreditCards() {
+    public List<CardResponse> getCreditCards() {
         return null;
     }
 }

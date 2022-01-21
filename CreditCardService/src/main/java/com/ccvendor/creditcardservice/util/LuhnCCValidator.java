@@ -2,10 +2,10 @@ package com.ccvendor.creditcardservice.util;
 
 import java.util.stream.IntStream;
 
-public class LuhnCardNumberValidator {
+public class LuhnCCValidator {
 
     public static boolean luhn10Check(final String ccNumber) {
-        long luhnSum = luhn10Sum(ccNumber);
+        final long luhnSum = luhn10Sum(ccNumber);
         return luhnSum > 0 && luhnSum % 10 == 0;
     }
 

@@ -1,5 +1,6 @@
 package com.ccvendor.creditcardservice.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
@@ -45,10 +46,12 @@ public class CardResponse {
         return this.cvc;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/yy")
     public Date getValidFrom() {
         return this.validFrom;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/yy")
     public Date getValidThru() {
         return this.validThru;
     }
@@ -59,6 +62,14 @@ public class CardResponse {
 
     public Double getBalance() {
         return this.balance;
+    }
+
+    public String getErrorMessage() {
+        return this.errorMessage;
+    }
+
+    public Boolean getCardAdded() {
+        return this.cardAdded;
     }
 
     public static class CardResponseBuilder {
