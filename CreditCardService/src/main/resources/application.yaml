@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: credit-card-service
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8056/eureka
+    fetch-registry: false
+
+creditcard:
+  minimum.limit: 10000.00
+  maximum.limit: 100000000.00
