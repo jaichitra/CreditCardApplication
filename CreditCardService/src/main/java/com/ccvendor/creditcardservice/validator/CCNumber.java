@@ -10,10 +10,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CCNumber {
 
-    String message() default "{Invalid card number passed, Card number validation failed}";
+    String message() default "Invalid card number passed, Card number validation failed";
 
     Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload()default{};
+    Class<? extends Payload>[] payload() default {};
 
 }

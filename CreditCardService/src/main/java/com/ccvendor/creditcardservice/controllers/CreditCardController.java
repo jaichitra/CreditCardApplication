@@ -27,7 +27,7 @@ public class CreditCardController {
     @PostMapping(value = "/creditcard", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CardResponse> addCreditCard(@Valid @RequestBody final CardRequest cardRequest, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(CardResponse.builder().cardNumber(cardRequest.getCardNumber()).applicantName(cardRequest.getApplicantName()).errorMessage("Error").cardAdded(false).build(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(CardResponse.builder().cardNumber(cardRequest.getCardNumber()).applicantName(cardRequest.getApplicantName()).errorMessage(bindingResult.getAllErrors().iterator().next().getDefaultMessage()).build(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(this.cardService.addCreditCard(cardRequest), HttpStatus.OK);
     }

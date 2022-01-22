@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CardLimit {
 
-    String message() default "{Card Limit validation failed}";
+    String message() default "Card Limit validation failed";
 
     Class<?>[] groups() default {};
 

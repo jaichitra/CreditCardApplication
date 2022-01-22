@@ -1,11 +1,13 @@
 package com.ccvendor.creditcardservice.data;
 
+import com.ccvendor.creditcardservice.validator.CCNumber;
 import com.ccvendor.creditcardservice.validator.CardLimit;
 
 import javax.validation.constraints.NotEmpty;
 
 public class CardRequest {
 
+    @CCNumber
     private String cardNumber;
 
     @NotEmpty(message = "Credit Card request Applicant Name cannot be empty")

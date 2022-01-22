@@ -1,6 +1,7 @@
 package com.ccvendor.creditcardservice.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
@@ -10,13 +11,12 @@ public class CardResponse {
 
     private final String cardNumber;
     private final String applicantName;
-    private final String cvc;
-    private final Date validFrom;
-    private final Date validThru;
     private final Double limit;
     private final Double balance;
     private final String errorMessage;
-    private final Boolean cardAdded;
+    private String cvc;
+    private Date validFrom;
+    private Date validThru;
 
     private CardResponse(final CardResponseBuilder cardResponseBuilder) {
         this.cardNumber = cardResponseBuilder.cardNumber;
@@ -27,7 +27,6 @@ public class CardResponse {
         this.limit = cardResponseBuilder.limit;
         this.balance = cardResponseBuilder.balance;
         this.errorMessage = cardResponseBuilder.errorMessage;
-        this.cardAdded = cardResponseBuilder.cardAdded;
     }
 
     public static CardResponseBuilder builder() {
@@ -68,8 +67,11 @@ public class CardResponse {
         return this.errorMessage;
     }
 
-    public Boolean getCardAdded() {
-        return this.cardAdded;
+    @JsonIgnore
+    public void omitSensitiveInformation() {
+        this.cvc = null;
+        this.validFrom = null;
+        this.validThru = null;
     }
 
     public static class CardResponseBuilder {
@@ -82,7 +84,6 @@ public class CardResponse {
         private Double limit;
         private Double balance;
         private String errorMessage;
-        private Boolean cardAdded;
 
         public CardResponseBuilder cardRequest(final CardRequest cardRequest) {
             this.cardNumber = cardRequest.getCardNumber();
@@ -128,12 +129,6 @@ public class CardResponse {
 
         public CardResponseBuilder errorMessage(final String errorMessage) {
             this.errorMessage = errorMessage;
-            return this;
-        }
-
-
-        public CardResponseBuilder cardAdded(final Boolean cardAdded) {
-            this.cardAdded = cardAdded;
             return this;
         }
 
