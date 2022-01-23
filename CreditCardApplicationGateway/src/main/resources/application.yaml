@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: Credit-Card-Application-Gateway
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8056/eureka
+
+
+zuul:
+  routes:
+    credit-card-service:
+      path: /ccvendor/**
+      sensitiveHeaders:
+      ignoredHeaders:
+      strip-prefix: true

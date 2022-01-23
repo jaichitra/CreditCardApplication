@@ -12,6 +12,7 @@
     <modules>
         <module>CreditCardDiscoveryServer</module>
         <module>CreditCardService</module>
+        <module>CreditCardApplicationGateway</module>
     </modules>
 
 </project>
