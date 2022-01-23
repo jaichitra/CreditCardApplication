@@ -31,13 +31,13 @@ public class CardService {
 
     private ExecutorService execService;
 
-    @Value("${dbsync.threadcount}")
-    private Integer dbSyncThreadCount;
+    private final Integer dbSyncThreadCount;
 
     @Autowired
-    public CardService(final CardDAO cardDAO, final AppSyncService dbSyncService) {
+    public CardService(final CardDAO cardDAO, final AppSyncService dbSyncService, @Value("${dbsync.threadcount}") final Integer dbSyncThreadCount) {
         this.cardDAO = cardDAO;
         this.dbSyncService = dbSyncService;
+        this.dbSyncThreadCount = dbSyncThreadCount;
     }
 
     private static String generateRandomCVCNumber() {
@@ -67,7 +67,7 @@ public class CardService {
                 cardRequest.getCardLimit(), cvcNumber, validFrom, validThru, initialBalance, currency);
 
         if (cc == null) {
-            log.info("Card details for card number : {} already present in DB", MaskUtil.maskCreditCardNumber(cc.getCreditCardNumber()));
+            log.info("Card details for card number : {} already present in DB", MaskUtil.maskCreditCardNumber(cardRequest.getCardNumber()));
             return CardResponse.builder().cardRequest(cardRequest).errorMessage("Card Details already exists").build();
         }
 
