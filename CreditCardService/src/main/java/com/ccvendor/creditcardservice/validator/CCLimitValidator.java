@@ -7,11 +7,16 @@ import javax.validation.ConstraintValidatorContext;
 
 public class CCLimitValidator implements ConstraintValidator<CardLimit, Double> {
 
-    @Value("#{new Double('${creditcard.minimum.limit}')}")
-    private Double minimumCardLimit;
+    private final Double minimumCardLimit;
 
-    @Value("#{new Double('${creditcard.maximum.limit}')}")
-    private Double maximumCardLimit;
+    private final Double maximumCardLimit;
+
+    public CCLimitValidator(@Value("#{new Double('${creditcard.minimum.limit}')}") final Double minimumCardLimit,
+                            @Value("#{new Double('${creditcard.maximum.limit}')}") final Double maximumCardLimit) {
+        super();
+        this.maximumCardLimit = maximumCardLimit;
+        this.minimumCardLimit = minimumCardLimit;
+    }
 
     @Override
     public void initialize(final CardLimit ccNumber) {

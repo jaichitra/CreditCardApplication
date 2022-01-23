@@ -1,6 +1,6 @@
 package com.ccvendor.creditcardservice.validator;
 
-import com.ccvendor.creditcardservice.util.LuhnCCValidator;
+import com.ccvendor.creditcardservice.util.LuhnCCValidatorUtil;
 import org.apache.commons.lang.StringUtils;
 
 import javax.validation.ConstraintValidator;
@@ -16,7 +16,7 @@ public class CCNumberValidator implements ConstraintValidator<CCNumber, String> 
     public boolean isValid(final String ccNo, final ConstraintValidatorContext ctx) {
         if (StringUtils.isEmpty(ccNo)) return false;
         if (ccNo.length() < 16 || ccNo.length() > 19) return false;
-        if (!LuhnCCValidator.luhn10Check(ccNo)) return false;
+        if (!LuhnCCValidatorUtil.luhn10Check(ccNo)) return false;
         return true;
     }
 

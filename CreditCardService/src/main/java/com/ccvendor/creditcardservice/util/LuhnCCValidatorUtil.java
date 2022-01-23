@@ -2,7 +2,7 @@ package com.ccvendor.creditcardservice.util;
 
 import java.util.stream.IntStream;
 
-public class LuhnCCValidator {
+public class LuhnCCValidatorUtil {
 
     public static boolean luhn10Check(final String ccNumber) {
         final long luhnSum = luhn10Sum(ccNumber);
