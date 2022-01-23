@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: CreditCardDiscoveryServer
+
+server:
+  port: 8056
+
+eureka:
+  environment: DEV
+  instance:
+    defaultZone: http://localhost:8056/eureka
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:8056/eureka

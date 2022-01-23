@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: credit-card-service
+  datasource:
+    url: jdbc:h2:file:./data/ccvendor/db${random.int(100)}
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console.path: /h2-console
+    console.settings.trace: false
+    spring.h2.console.settings.web-allow-others: false
+
+
+server:
+  port: 0
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    hostname: localhost
+    preferIpAddress: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8056/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+creditcard:
+  minimum.limit: 10000.00
+  maximum.limit: 100000000.00
+
+dbsync.threadcount: 5
