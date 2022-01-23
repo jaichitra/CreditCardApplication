@@ -30,6 +30,13 @@ public class CardDataController {
         this.cardService = cardService;
     }
 
+    /**
+     * Api to add CreditCard information data.
+     *
+     * @param cardRequest
+     * @param bindingResult
+     * @return
+     */
     @PostMapping(value = "/creditcard", produces = "application/json")
     @RolesAllowed({"ROLE_ADMIN", "ROLE_USER"})
     public ResponseEntity<CardResponse> addCreditCard(@Valid @RequestBody final CardRequest cardRequest, final BindingResult bindingResult) {
@@ -41,6 +48,11 @@ public class CardDataController {
         return new ResponseEntity<>(this.cardService.addCreditCard(cardRequest), HttpStatus.OK);
     }
 
+    /**
+     * API to fetch all the valid cards, by masking the sensitive information.
+     *
+     * @return
+     */
     @GetMapping(value = "/creditcards", produces = "application/json")
     @RolesAllowed("ROLE_ADMIN")
     public List<CardResponse> getCreditCard() {
@@ -48,6 +60,12 @@ public class CardDataController {
         return this.cardService.getValidCreditCards();
     }
 
+    /**
+     * Internal API for syncing the data with other available instances on adding a new Card Data
+     *
+     * @param cardRequest
+     * @return
+     */
     @PostMapping(value = "/dbSync")
     @RolesAllowed(SystemAdminUser.USER_ROLE)
     public ResponseEntity<Void> databaseSync(@RequestBody final List<CardDetails> cardRequest) {
@@ -56,6 +74,11 @@ public class CardDataController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Internal API for syncing the data on application start.
+     *
+     * @return
+     */
     @GetMapping(value = "/dbSync", produces = "application/json")
     @RolesAllowed(SystemAdminUser.USER_ROLE)
     public List<CardDetails> fetchCardCaches() {

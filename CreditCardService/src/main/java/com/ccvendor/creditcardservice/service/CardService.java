@@ -28,10 +28,8 @@ public class CardService {
     private final CardDAO cardDAO;
 
     private final AppSyncService dbSyncService;
-
-    private ExecutorService execService;
-
     private final Integer dbSyncThreadCount;
+    private ExecutorService execService;
 
     @Autowired
     public CardService(final CardDAO cardDAO, final AppSyncService dbSyncService, @Value("${dbsync.threadcount}") final Integer dbSyncThreadCount) {
@@ -51,6 +49,12 @@ public class CardService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method composes all the credit card data and invoked the database save.
+     *
+     * @param cardRequest
+     * @return
+     */
     public CardResponse addCreditCard(final CardRequest cardRequest) {
 
         final Calendar cal = Calendar.getInstance();
@@ -78,6 +82,12 @@ public class CardService {
         return transformCCToReponse(ImmutableList.of(cc)).iterator().next();
     }
 
+    /**
+     * Method invokes dySyncService on a new card addition, to update all the available instances.
+     * Is a async process and runs on a new thread.
+     *
+     * @param cc
+     */
     private void broadcastCache(final CardDetails cc) {
         if (this.execService == null)
             this.execService = Executors.newFixedThreadPool(Integer.valueOf(this.dbSyncThreadCount));
@@ -85,6 +95,12 @@ public class CardService {
         this.execService.submit(() -> this.dbSyncService.syncDatabaseData(ImmutableList.of(cc)));
     }
 
+    /**
+     * Fetch method to list all the valid card data.
+     * Omits the sensitive information of a card
+     *
+     * @return
+     */
     public List<CardResponse> getValidCreditCards() {
         final List<CardDetails> cards = this.cardDAO.fetchAllValidCreditCard();
         final List<CardResponse> cardResponse = transformCCToReponse(cards);
@@ -94,11 +110,21 @@ public class CardService {
         return cardResponse;
     }
 
+    /**
+     * Method invoked from internal API to update the db on other available instances.
+     *
+     * @param cardRequest
+     */
     public void syncCreditCardData(final List<CardDetails> cardRequest) {
         log.debug("Db sync storing {} card details", cardRequest.size());
         this.cardDAO.saveCardData(cardRequest);
     }
 
+    /**
+     * Method invoked from internal API to fetch the card data on application start.
+     *
+     * @return
+     */
     public List<CardDetails> fetchAllCreditCardData() {
         log.debug("Db sync fetching card details");
         return this.cardDAO.fetchAllCreditCardData();

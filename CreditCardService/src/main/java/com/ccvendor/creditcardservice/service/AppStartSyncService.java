@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class fetches the registry from discovery client and fetches the current state of database data from all the other available instances.
+ */
 @Component
 public class AppStartSyncService extends AbstractSyncService {
     private static final Logger log = LoggerFactory.getLogger(AppStartSyncService.class);
@@ -42,7 +45,7 @@ public class AppStartSyncService extends AbstractSyncService {
 
         for (final ServiceInstance instance : instances) {
             final String requestURL = instance.getUri() + "/v1/dbSync";
-            if (this.isHostInstance(instance.getPort(), instance.getHost()))
+            if (this.isHostInstance(instance.getPort(), instance.getHost())) // Not to invoke dbsync on its own instance.
                 continue;
             log.info("Invoking instance with URL : {} , fetching cache ", requestURL);
             this.executeRequest(requestURL, cacheDataList);

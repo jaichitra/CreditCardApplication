@@ -13,6 +13,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 
+/**
+ * Abstract class for the database sync services.
+ */
 public class AbstractSyncService {
     private static final Logger log = LoggerFactory.getLogger(AbstractSyncService.class);
     protected static HttpHeaders httpHeaders;

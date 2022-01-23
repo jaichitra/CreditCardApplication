@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Database access object for carddetails table.
+ */
 @Service
 @Transactional
 public class CardDAO {

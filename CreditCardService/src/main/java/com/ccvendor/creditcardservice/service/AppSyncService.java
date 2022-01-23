@@ -16,6 +16,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+/**
+ * Class fetches the registry from discovery client and broadcast the updated card details to all the
+ * available service instances.
+ */
 @Component
 public class AppSyncService extends AbstractSyncService {
     private static final Logger log = LoggerFactory.getLogger(AppSyncService.class);
@@ -33,7 +37,7 @@ public class AppSyncService extends AbstractSyncService {
 
         for (final ServiceInstance instance : instances) {
             final String requestURL = instance.getUri() + "/v1/dbSync";
-            if (this.isHostInstance(instance.getPort(), instance.getHost()))
+            if (this.isHostInstance(instance.getPort(), instance.getHost())) // Not to invoke dbsync on its own instance.
                 continue;
             log.info("Invoking instance with URL : {} , update cache ", requestURL);
 

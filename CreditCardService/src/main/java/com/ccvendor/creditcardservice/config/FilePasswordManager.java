@@ -30,6 +30,10 @@ public class FilePasswordManager {
         return this.credentials.get(uName);
     }
 
+    /**
+     * Method loads the credential from password.txt file.
+     * Avoid any user from password.txt with ROLE -> ROLE_SYSTEM_ADMIN
+     */
     public void load() {
         try {
             final List<String> lineContent = IOUtils.readLines(ClassLoader.getSystemResourceAsStream("passwords.txt"));
